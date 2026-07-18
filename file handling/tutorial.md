@@ -61,7 +61,7 @@ fclose(file_pointer);
 > 'Before reading a file we should check that the file exists'
 
 ### Check if the file exists
-> To read a file , we have to know about the function `fgets( VARIABLE, N_CHARS, FILE_POINTER)`
+> To read a file , we have to know about the function `fgets( VARIABLE:string, N_CHARS:integer, FILE_POINTER:pointer)`
 > **VARIABLE** : where to store the value of the line
 > **N_CHAR** :  for each line, how much caracters to read
 > **FILE_POINTER** : the pointer of the file to read
@@ -78,11 +78,27 @@ char current_line[255]; // 255 => for each line, we want just the first 255 cara
 // get the value of the current line and store its content in the variable 'buffer'
 fgets(current_line,255,file_pointer ); // 255 = how much to read
 
+// print the current line
+printf("Line content : %s",current_line);
+
 // close the file pointer
 fclose(file_pointer);
 
 ```
 
+### Read a full file not just a line
+```c
+// create the file pointer
+FILE *file_pointer = fopen(file_path,"r"); // r = readonly mode, we can only get the content of the file, no modifications.
+
+// define the variable where to store each line.
+char current_line[255]; // 255 => for each line, we want just the first 255 caracters (you can modify it)
+
+// read line from the file and read the next one until the last line (where current_line = NULL)
+while ( fgets(current_line,255,file_pointer ) != NULL ){
+    printf("Line : %s",current_line);
+}
+```
 
 
 # 4. Remove a file
@@ -97,7 +113,7 @@ int error_number = remove("file_to_remove.txt");
 if (error_number == 0){ // 0 = no error and file removed successfully
     printf("File removed successfully ");
 
-} else (error_number) {
+} else (error_number) { // != 0 => error
     printf("Error : Cannot delete file, File Not found or Permission error... !");
 }
 ```
